@@ -95,8 +95,8 @@ public class custom extends View {
         paint3.setColor(Color.RED);
         paint4.setColor(Color.BLUE);
         paint5.setColor(Color.BLUE);
-        paint3.setTextSize(90);
-        paint4.setTextSize(90);
+        paint3.setTextSize(width/12);
+        paint4.setTextSize(width/12);
         paint5.setTextSize((width/8)-40);
         ar = new int[8][8];
         count = new int[8][8];
@@ -142,7 +142,7 @@ public class custom extends View {
                     score++;
             }
         }
-        canvas.drawText("Score : " + score, getWidth() / 3 - 60, 120, paint3);
+        canvas.drawText("Score : " + score, getWidth() / 3 - 60, width/8-40, paint3);
 
         for (i = 0; i < 8; i++) {
             for (j = 0; j < 8; j++) {
@@ -156,16 +156,16 @@ public class custom extends View {
                 if (ar[i][j] == 2) {
                     canvas.drawRect(rect1, paint3);
                     check=1;
-                    canvas.drawText("Game Over !", getWidth() / 4 - 20, 240, paint4);
+                    canvas.drawText("Game Over !", getWidth() / 4 - 20, width/10+width/8-40, paint4);
                     SharedPreferences sh = getContext().getSharedPreferences("pong", Context.MODE_PRIVATE);
                     int a = sh.getInt("highscore", 0);
                     if (a < score) {
                         SharedPreferences.Editor myEdit = sh.edit();
                         myEdit.putInt("highscore", score);
-                        canvas.drawText("High Score:" + score, canvas.getWidth() / 4 - 40, 290, paint4);
+                        canvas.drawText("High Score:" + score, canvas.getWidth() / 4 - 40, width/5+width/8-40, paint4);
                         myEdit.apply();
                     } else {
-                        canvas.drawText("High Score:" + a, canvas.getWidth() / 4 - 40, 360, paint4);
+                        canvas.drawText("High Score:" + a, canvas.getWidth() / 4 - 40, width/5+width/8-40, paint4);
                     }
                     v.vibrate(400);
                 }
@@ -181,10 +181,6 @@ public class custom extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-
-                return true;
-            }
-            case MotionEvent.ACTION_MOVE: {
                 int left = getWidth() / 2 - 310;
                 int top = getHeight() / 2 - 310;
                 float x = event.getX();
@@ -224,6 +220,10 @@ public class custom extends View {
 
                     }
                 }
+                return true;
+            }
+            case MotionEvent.ACTION_MOVE: {
+
             }
 
             return value;
