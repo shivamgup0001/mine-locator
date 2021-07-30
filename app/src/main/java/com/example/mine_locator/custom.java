@@ -8,8 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.CountDownTimer;
-import android.os.Handler;
+
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -19,10 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import android.os.Vibrator;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static android.content.Context.VIBRATOR_SERVICE;
@@ -41,10 +38,10 @@ public class custom extends View {
     private int i;
     private int j;
     private int k;
-    private int ar[][];
+    private int [][]ar;
     private int l;
     private int m;
-    private int bomb[];
+    private int []bomb;
     private Vibrator v;
     public int check = 0;
     private int score = 0;
@@ -189,8 +186,6 @@ public class custom extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                int left = getWidth() / 2 - 310;
-                int top = getHeight() / 2 - 310;
                 float x = event.getX();
                 float y = event.getY();
                 for (i = 0; i < 8; i++) {
@@ -202,7 +197,6 @@ public class custom extends View {
 
                                     l = bomb[k] / 8;
                                     m = bomb[k] % 8;
-                                    //if (ar[i][j] == 1) {
                                     if (l == i - 1) {
                                         if (m == j || m == j - 1 || m == j + 1)
                                             count[i][j]++;
