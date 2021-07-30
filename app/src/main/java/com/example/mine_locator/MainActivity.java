@@ -3,6 +3,7 @@ package com.example.mine_locator;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,8 @@ private Button button2;
             @Override
             public void onClick(View v) {
                 set(16);
-                setContentView(new custom(MainActivity.this));
+                Intent i=new Intent(MainActivity.this,MainActivity2.class);
+                startActivity(i);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +36,8 @@ private Button button2;
             @Override
             public void onClick(View v) {
                 set(8);
-                setContentView(new custom(MainActivity.this));
+                Intent i=new Intent(MainActivity.this,MainActivity2.class);
+                startActivity(i);
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +45,8 @@ private Button button2;
             @Override
             public void onClick(View v) {
                 set(24);
-                setContentView(new custom(MainActivity.this));
+                Intent i=new Intent(MainActivity.this,MainActivity2.class);
+                startActivity(i);
             }
         });
     }

@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -35,6 +37,7 @@ public class custom extends View {
     private Paint paint3;
     private Paint paint4;
     private Paint paint5;
+    private Paint paint6;
     private int i;
     private int j;
     private int k;
@@ -77,8 +80,9 @@ public class custom extends View {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
     private void init(@Nullable AttributeSet set) {
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((MainActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((MainActivity2) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
         rect = new Rect();
         paint = new Paint();
@@ -88,6 +92,7 @@ public class custom extends View {
         paint3 = new Paint();
         paint4 = new Paint();
         paint5 = new Paint();
+        paint6 = new Paint();
         rand = new Random();
         paint.setColor(Color.BLACK);
         paint1.setColor(Color.WHITE);
@@ -95,9 +100,11 @@ public class custom extends View {
         paint3.setColor(Color.RED);
         paint4.setColor(Color.BLUE);
         paint5.setColor(Color.BLUE);
+        paint6.setColor(Color.RED);
         paint3.setTextSize(width/12);
         paint4.setTextSize(width/12);
         paint5.setTextSize((width/8)-40);
+        paint6.setTextSize((width/8)-60);
         ar = new int[8][8];
         count = new int[8][8];
         bomb = new int[64];
@@ -168,6 +175,7 @@ public class custom extends View {
                         canvas.drawText("High Score:" + a, canvas.getWidth() / 4 - 40, width/5+width/8-40, paint4);
                     }
                     v.vibrate(400);
+                    canvas.drawText("Press Back ->\n Main Menu" , canvas.getWidth() / 4 - 140, getHeight()-width/7, paint6);
                 }
             }
         }
