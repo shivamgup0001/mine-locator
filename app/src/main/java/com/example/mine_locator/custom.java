@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -46,6 +47,7 @@ public class custom extends View {
     private int score = 0;
     private Random rand;
     private int count[][];
+    private int width;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public custom(Context context) {
         super(context);
@@ -75,6 +77,9 @@ public class custom extends View {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
     private void init(@Nullable AttributeSet set) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((MainActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
         rect = new Rect();
         paint = new Paint();
         rect1 = new Rect();
@@ -92,14 +97,25 @@ public class custom extends View {
         paint5.setColor(Color.BLUE);
         paint3.setTextSize(90);
         paint4.setTextSize(90);
-        paint5.setTextSize(60);
+        paint5.setTextSize((width/8)-40);
         ar = new int[8][8];
         count = new int[8][8];
         bomb = new int[64];
 
         for(i=0;i<MainActivity.get();i++)
         {
-            int u= ThreadLocalRandom.current().nextInt(0,63);
+            int u=0;
+            int count=1;
+            while(count!=0) {
+                count=0;
+                u = ThreadLocalRandom.current().nextInt(0, 63);
+                if(i>0){
+                    for (j = 0; j < i; j++) {
+                        if (bomb[j] == u)
+                            count++;
+                    }
+                }
+            }
             bomb[i]=u;
         }
         for (i = 0; i < 8; i++) {
@@ -118,7 +134,7 @@ public class custom extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(Color.YELLOW);
-        rect.set(getWidth() / 2 - 320, getHeight() / 2 - 320, getWidth() / 2 + 320, getHeight() / 2 + 320);
+        rect.set(40, getHeight() / 2 - (width/2)+40, width-40, getHeight() / 2 + (width/2)-40);
         canvas.drawRect(rect, paint);
         for (i = 0; i < 8; i++) {
             for (j = 0; j < 8; j++) {
@@ -130,17 +146,17 @@ public class custom extends View {
 
         for (i = 0; i < 8; i++) {
             for (j = 0; j < 8; j++) {
-                rect1.set(getWidth() / 2 - 310 + 80 * j, getHeight() / 2 - 310 + 80 * i, getWidth() / 2 - 310 + 60 + 80 * j, getHeight() / 2 - 310 + 60 + 80 * i);
+                rect1.set(50 + ((width/8)-10)* j, getHeight() / 2 - (width/2)+50+((width/8)-10)* i, 30 + ((width/8)-10)* (j+1), getHeight() / 2 - (width/2)+50+((width/8)-10)* (i+1)-20);
                 if (ar[i][j] == 0)
                     canvas.drawRect(rect1, paint1);
                 if (ar[i][j] == 1) {
                     canvas.drawRect(rect1, paint2);
-                    canvas.drawText("" + count[i][j], rect1.left + 15, rect1.bottom - 15, paint5);
+                    canvas.drawText("" + count[i][j], rect1.left + 25, rect1.bottom - 15, paint5);
                 }
                 if (ar[i][j] == 2) {
                     canvas.drawRect(rect1, paint3);
-                   check=1;
-                    canvas.drawText("Game Over !", getWidth() / 4 - 40, 200, paint4);
+                    check=1;
+                    canvas.drawText("Game Over !", getWidth() / 4 - 20, 240, paint4);
                     SharedPreferences sh = getContext().getSharedPreferences("pong", Context.MODE_PRIVATE);
                     int a = sh.getInt("highscore", 0);
                     if (a < score) {
@@ -149,7 +165,7 @@ public class custom extends View {
                         canvas.drawText("High Score:" + score, canvas.getWidth() / 4 - 40, 290, paint4);
                         myEdit.apply();
                     } else {
-                        canvas.drawText("High Score:" + a, canvas.getWidth() / 4 - 40, 290, paint4);
+                        canvas.drawText("High Score:" + a, canvas.getWidth() / 4 - 40, 360, paint4);
                     }
                     v.vibrate(400);
                 }
@@ -175,7 +191,7 @@ public class custom extends View {
                 float y = event.getY();
                 for (i = 0; i < 8; i++) {
                     for (j = 0; j < 8; j++) {
-                        if ((x > (left + (80 * j))) && (x < (left + (80 * j) + 60)) && (y > (top + (80 * i))) && (y < (top + (80 * i) + 60))) {
+                        if ((x > (50 + ((width/8)-10)* j)) && (x < (30 + ((width/8)-10)* (j+1))) && (y > (getHeight() / 2 - (width/2)+50+((width/8)-10)* i)) && (y < (getHeight() / 2 - (width/2)+50+((width/8)-10)* (i+1)-20))) {
                             if (ar[i][j] == 0) {
                                 ar[i][j] = 1;
                                 for (k = 0; k < MainActivity.get(); k++) {

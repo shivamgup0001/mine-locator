@@ -25,7 +25,7 @@ private Button button2;
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                set(20);
+                set(16);
                 setContentView(new custom(MainActivity.this));
             }
         });
@@ -41,7 +41,7 @@ private Button button2;
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                set(30);
+                set(24);
                 setContentView(new custom(MainActivity.this));
             }
         });
